@@ -8,6 +8,9 @@
 	<packaging>pom</packaging>
 
 	<properties>
+		<maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        
 		<mysql.jdbc.driver.version>6.0.6</mysql.jdbc.driver.version>
 		<apache.commons.lang3.vesion>3.7</apache.commons.lang3.vesion>
 		<apache.commons.collection.version>4.1</apache.commons.collection.version>
@@ -32,13 +35,12 @@
 
 	<dependencyManagement>
 		<dependencies>
+			<!-- API -->
 			<dependency>
 				<groupId>org.ysh</groupId>
 				<artifactId>db-deployer-api</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-
-
 
 			<!-- JDBC Driver -->
 			<dependency>
@@ -121,8 +123,6 @@
 				<version>${easymock.version}</version>
 				<scope>test</scope>
 			</dependency>
-
-
 		</dependencies>
 	</dependencyManagement>
 </project>
