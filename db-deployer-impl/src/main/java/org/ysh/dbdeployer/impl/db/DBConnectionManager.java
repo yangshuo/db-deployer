@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import org.ysh.deployer.api.DBDeployException;
+import org.ysh.dbdeployer.api.DBDeployException;
 
 public class DBConnectionManager {
 	private String jdbcUrl;

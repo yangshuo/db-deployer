@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.ysh.dbdeployer.impl.db.changelog.ChangeLogDao;
 import org.ysh.dbdeployer.impl.db.changelog.ChangeLogPo;
 import org.ysh.dbdeployer.impl.file.SqlScriptFileReader;
-import org.ysh.deployer.api.DBDeployException;
+import org.ysh.dbdeployer.api.DBDeployException;
 
 import com.google.common.collect.Lists;
 

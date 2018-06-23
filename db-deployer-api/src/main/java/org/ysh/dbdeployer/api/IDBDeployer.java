@@ -1,4 +1,4 @@
-package org.ysh.deployer.api;
+package org.ysh.dbdeployer.api;
 
 import java.io.File;
 

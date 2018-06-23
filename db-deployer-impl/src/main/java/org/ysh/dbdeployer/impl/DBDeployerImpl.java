@@ -13,8 +13,8 @@ import org.ysh.dbdeployer.impl.db.DBConnectionManager;
 import org.ysh.dbdeployer.impl.db.DBScriptRunner;
 import org.ysh.dbdeployer.impl.file.SqlScriptFileManager;
 import org.ysh.dbdeployer.impl.file.SqlScriptFileUtils;
-import org.ysh.deployer.api.DBDeployException;
-import org.ysh.deployer.api.IDBDeployer;
+import org.ysh.dbdeployer.api.IDBDeployer;
+import org.ysh.dbdeployer.api.DBDeployException;
 
 public class DBDeployerImpl implements IDBDeployer {
 	private static final Logger logger = LoggerFactory.getLogger(DBDeployerImpl.class);
@@ -24,26 +24,12 @@ public class DBDeployerImpl implements IDBDeployer {
 
 	public DBDeployerImpl(Configuration configuration) throws DBDeployException {
 		this.configuration = configuration;
-		this.init();
-	}
-
-	private void init() throws DBDeployException {
-		final String jdbcUrl = configuration.getUrl();
-		final String username = configuration.getUsername();
-		final String password = configuration.getPassword();
-		final String jdbcDriver = configuration.getJdbcDriver();
-
-		try {
-			this.dbConnectionManager = new DBConnectionManager(jdbcDriver, jdbcUrl, username, password);
-		} catch (ClassNotFoundException e) {
-			throw new DBDeployException(e);
-		}
 	}
 
 	@Override
 	public void reset() throws DBDeployException {
 		// 1. create the changelog
-		try (Connection connection = dbConnectionManager.getConnection()) {
+		try (Connection connection = createConnection()) {
 			logger.info("Start to create changelog....");
 			File initSqlFile = new File(this.getClass().getResource("/changelog.sql").getFile());
 			new DBScriptRunner(initSqlFile, configuration.getSqlStatementDelimiter(), connection).run();
@@ -58,7 +44,7 @@ public class DBDeployerImpl implements IDBDeployer {
 
 	@Override
 	public void update() throws DBDeployException {
-		try (final Connection connection = dbConnectionManager.getConnection()) {
+		try (final Connection connection = createConnection()) {
 			connection.setAutoCommit(false);
 
 			final SqlScriptFileManager sqlScriptFileManager = new SqlScriptFileManager(connection,
@@ -81,6 +67,22 @@ public class DBDeployerImpl implements IDBDeployer {
 			throw new DBDeployException(e);
 		}
 
+	}
+
+	private Connection createConnection() throws DBDeployException {
+		if (this.dbConnectionManager == null) {
+			final String jdbcUrl = configuration.getUrl();
+			final String username = configuration.getUsername();
+			final String password = configuration.getPassword();
+			final String jdbcDriver = configuration.getJdbcDriver();
+
+			try {
+				this.dbConnectionManager = new DBConnectionManager(jdbcDriver, jdbcUrl, username, password);
+			} catch (ClassNotFoundException e) {
+				throw new DBDeployException(e);
+			}
+		}
+		return this.dbConnectionManager.getConnection();
 	}
 
 	@Override

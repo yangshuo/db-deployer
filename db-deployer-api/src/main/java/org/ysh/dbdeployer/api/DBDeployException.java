@@ -1,6 +1,6 @@
-package org.ysh.deployer.api;
+package org.ysh.dbdeployer.api;
 
-public class DBDeployException extends Exception{
+public class DBDeployException extends Exception {
 
 	private static final long serialVersionUID = -2684705339047625427L;
 
@@ -24,6 +24,4 @@ public class DBDeployException extends Exception{
 		super(cause);
 	}
 
-	
-	
 }

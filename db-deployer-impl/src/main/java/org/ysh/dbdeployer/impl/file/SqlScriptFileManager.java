@@ -15,7 +15,7 @@ import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.ysh.dbdeployer.impl.db.changelog.ChangeLogDao;
 import org.ysh.dbdeployer.impl.db.changelog.ChangeLogPo;
-import org.ysh.deployer.api.DBDeployException;
+import org.ysh.dbdeployer.api.DBDeployException;
 
 public class SqlScriptFileManager {
 	private ChangeLogDao changeLogDao;

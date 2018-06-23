@@ -33,3 +33,6 @@ hs_err_pid*
 
 # maven target dir
 target/
+.vscode/
+
+.factorypath
