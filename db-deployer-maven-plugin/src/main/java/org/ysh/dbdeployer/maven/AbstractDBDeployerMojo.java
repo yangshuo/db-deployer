@@ -14,8 +14,8 @@ import org.ysh.dbdeployer.impl.DBDeployerImpl;
 
 public abstract class AbstractDBDeployerMojo extends AbstractMojo {
 
-	@Parameter(property = "jdbc.driver")
-	private String jdbcDriver;
+	@Parameter(property = "jdbc.driverClass")
+	private String driverClass;
 	@Parameter(property = "jdbc.url")
 	private String url;
 	@Parameter(property = "jdbc.username")
@@ -27,8 +27,8 @@ public abstract class AbstractDBDeployerMojo extends AbstractMojo {
 	@Parameter(property = "sql.statementDelimiter")
 	private char sqlStatementDelimiter;
 
-	public void setJdbcDriver(final String jdbcDriver) {
-		this.jdbcDriver = jdbcDriver;
+	public void setDriverClass(final String driverClass) {
+		this.driverClass = driverClass;
 	}
 
 	public void setUrl(final String url) {
@@ -53,7 +53,7 @@ public abstract class AbstractDBDeployerMojo extends AbstractMojo {
 
 	protected IDBDeployer createDBDeployer() throws DBDeployException {
 		final Configuration configuration = new Configuration();
-		configuration.setJdbcDriver(jdbcDriver);
+		configuration.setJdbcDriver(driverClass);
 		configuration.setUrl(url);
 		configuration.setUsername(username);
 		configuration.setPassword(password);
@@ -64,7 +64,7 @@ public abstract class AbstractDBDeployerMojo extends AbstractMojo {
 
 	protected void logConfiguration() {
 		getLog().debug(String.format("jdbcURL:%s", url));
-		getLog().debug(String.format("jdbcDriver:%s", jdbcDriver));
+		getLog().debug(String.format("jdbcDriver:%s", driverClass));
 		getLog().debug(String.format("jdbcUserName:%s", username));
 		getLog().debug(String.format("jdbcPassword:%s", password));
 		getLog().debug(String.format("sqlScriptDir:%s", sqlScriptDir));
