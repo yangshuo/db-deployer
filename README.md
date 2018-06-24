@@ -1,5 +1,15 @@
 [TOC]
 
+# Recommended Project Structure
+```
+project
+|  pom.xml
+|__sqls
+   |  DDL_20180801231423.sql
+   |  DML_20180801531423.sql
+   |  ...
+
+```
 # Usage
 ## Use the plugin
 ```xml
@@ -57,7 +67,7 @@
 	mvn dbdeployer:reset
 		-Djdbc.driverClass=com.mysql.jdbc.Driver 
 		-Djdbc.url=jdbc:mysql://localhost:3306/demo 
-		-Djdbc.usernaame=demo 
+		-Djdbc.username=demo 
 		-Djdbc.password=demo 
 		-Dsql.scriptDir=sqls 
 		-Dsql.statementDelimiter=;
