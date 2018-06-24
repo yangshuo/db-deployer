@@ -14,18 +14,42 @@ import org.ysh.dbdeployer.impl.DBDeployerImpl;
 
 public abstract class AbstractDBDeployerMojo extends AbstractMojo {
 
-	@Parameter(name = "jdbc.driver")
+	@Parameter(property = "jdbc.driver")
 	private String jdbcDriver;
-	@Parameter(name = "jdbc.url")
+	@Parameter(property = "jdbc.url")
 	private String url;
-	@Parameter(name = "jdbc.username")
+	@Parameter(property = "jdbc.username")
 	private String username;
-	@Parameter(name = "jdbc.password")
+	@Parameter(property = "jdbc.password")
 	private String password;
-	@Parameter(name = "sql.scriptDir")
+	@Parameter(property = "sql.scriptDir")
 	private File sqlScriptDir;
-	@Parameter(name = "sql.statementDelimiter")
+	@Parameter(property = "sql.statementDelimiter")
 	private char sqlStatementDelimiter;
+
+	public void setJdbcDriver(final String jdbcDriver) {
+		this.jdbcDriver = jdbcDriver;
+	}
+
+	public void setUrl(final String url) {
+		this.url = url;
+	}
+
+	public void setUsername(final String username) {
+		this.username = username;
+	}
+
+	public void setPassword(final String password) {
+		this.password = password;
+	}
+
+	public void setSqlScriptDir(final File sqlScriptDir) {
+		this.sqlScriptDir = sqlScriptDir;
+	}
+
+	public void setSqlStatementDelimiter(final char sqlStatementDelimiter) {
+		this.sqlStatementDelimiter = sqlStatementDelimiter;
+	}
 
 	protected IDBDeployer createDBDeployer() throws DBDeployException {
 		final Configuration configuration = new Configuration();

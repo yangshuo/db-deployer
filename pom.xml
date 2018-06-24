@@ -33,6 +33,7 @@
 		<module>db-deployer-api</module>
 		<module>db-deployer-impl</module>
 		<module>db-deployer-maven-plugin</module>
+		<module>db-deployer-maven-plugin-demo</module>
 	</modules>
 
 	<dependencyManagement>
@@ -50,8 +51,6 @@
 				<artifactId>db-deployer-impl</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-
-
 
 			<!-- JDBC Driver -->
 			<dependency>
@@ -151,4 +150,16 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.ysh</groupId>
+					<artifactId>db-deployer-maven-plugin</artifactId>
+					<version>${project.version}</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
 </project>

@@ -18,6 +18,7 @@ import org.ysh.dbdeployer.api.DBDeployException;
 
 public class DBDeployerImpl implements IDBDeployer {
 	private static final Logger logger = LoggerFactory.getLogger(DBDeployerImpl.class);
+	private static final char CHNAGE_LOG_STATEMENT_DELIMITER = '/';
 
 	private Configuration configuration;
 	private DBConnectionManager dbConnectionManager;
@@ -32,7 +33,7 @@ public class DBDeployerImpl implements IDBDeployer {
 		try (Connection connection = createConnection()) {
 			logger.info("Start to create changelog....");
 			File initSqlFile = new File(this.getClass().getResource("/changelog.sql").getFile());
-			new DBScriptRunner(initSqlFile, configuration.getSqlStatementDelimiter(), connection).run();
+			new DBScriptRunner(initSqlFile, CHNAGE_LOG_STATEMENT_DELIMITER, connection).run();
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e);
 			throw new DBDeployException(e);
@@ -87,30 +88,41 @@ public class DBDeployerImpl implements IDBDeployer {
 
 	@Override
 	public File createNewDDL() throws DBDeployException {
+		final String sqlScriptFileName = SqlScriptFileUtils.createNewDDLFileName();
+		final File sqlScriptFile = new File(configuration.getSqlScriptDir(), sqlScriptFileName);
+
 		try {
-			final String sqlScriptFileName = SqlScriptFileUtils.createNewDDLFileName();
-			File sqlScriptFile = new File(configuration.getSqlScriptDir(), sqlScriptFileName);
+			mkdirIfNotExits(configuration.getSqlScriptDir());
 			sqlScriptFile.createNewFile();
-
-			logger.info("create new DDL {}", sqlScriptFileName);
-			return sqlScriptFile;
-
 		} catch (IOException ioe) {
+			logger.error("Failed to create DDL {}", sqlScriptFile.getAbsolutePath());
 			throw new DBDeployException(ioe);
 		}
+
+		logger.info("create new DDL {}", sqlScriptFileName);
+		return sqlScriptFile;
 	}
 
 	@Override
 	public File createNewDML() throws DBDeployException {
-		try {
-			final String sqlScriptFileName = SqlScriptFileUtils.createNewDMLFileName();
-			File sqlScriptFile = new File(configuration.getSqlScriptDir(), sqlScriptFileName);
-			sqlScriptFile.createNewFile();
+		final String sqlScriptFileName = SqlScriptFileUtils.createNewDMLFileName();
+		final File sqlScriptFile = new File(configuration.getSqlScriptDir(), sqlScriptFileName);
 
-			logger.info("create new DML {}", sqlScriptFileName);
-			return sqlScriptFile;
+		try {
+			mkdirIfNotExits(configuration.getSqlScriptDir());
+			sqlScriptFile.createNewFile();
 		} catch (IOException ioe) {
+			logger.error("Fail to create DML {}", sqlScriptFile.getAbsolutePath());
 			throw new DBDeployException(ioe);
+		}
+
+		logger.info("create new DML {}", sqlScriptFileName);
+		return sqlScriptFile;
+	}
+
+	private void mkdirIfNotExits(final File dir) {
+		if (dir.exists() == false) {
+			dir.mkdirs();
 		}
 	}
 

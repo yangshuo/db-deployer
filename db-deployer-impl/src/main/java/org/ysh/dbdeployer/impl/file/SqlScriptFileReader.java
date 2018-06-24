@@ -2,7 +2,10 @@ package org.ysh.dbdeployer.impl.file;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.Reader;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,7 +30,7 @@ public class SqlScriptFileReader {
 	public List<String> read() throws DBDeployException {
 		final List<String> sqlStatements = new ArrayList<>();
 
-		try (BufferedReader reader = new BufferedReader(new FileReader(sqlScriptFile))) {
+		try (BufferedReader reader = new BufferedReader(buildReader(sqlScriptFile))) {
 			final char[] cbuffer = new char[2048];
 			StringBuilder sqlStatement = new StringBuilder(1024);
 
@@ -58,5 +61,13 @@ public class SqlScriptFileReader {
 
 		return sqlStatements.stream().filter(statement -> StringUtils.isNotBlank(statement))
 				.collect(Collectors.toList());
+	}
+
+	private Reader buildReader(final File sqlFile) throws FileNotFoundException {
+		if (sqlFile.getName().equals("changelog.sql")) {// 针对changelog.sql特殊处理
+			return new InputStreamReader(this.getClass().getResourceAsStream("/changelog.sql"));
+		} else {
+			return new FileReader(sqlFile);
+		}
 	}
 }
