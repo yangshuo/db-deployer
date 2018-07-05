@@ -18,7 +18,7 @@ project
 			<plugin>
 				<groupId>org.ysh</groupId>
 				<artifactId>db-deployer-maven-plugin</artifactId>
-				<version>1.0.0</version>
+				<version>1.0.1-SNAPSHOT</version>
 			</plugin>
 		</plugins>
 	</build>
@@ -31,7 +31,7 @@ project
 			<plugin>
 				<groupId>org.ysh</groupId>
 				<artifactId>db-deployer-maven-plugin</artifactId>
-				<version>1.0.0</version>
+				<version>1.0.1-SNAPSHOT</version>
 				<configuration>
 					<driverClass>com.mysql.jdbc.Driver</driverClass>
 					<url>jdbc:mysql://localhost:3306/demo</url>
@@ -58,7 +58,7 @@ project
 			<plugin>
 				<groupId>org.ysh</groupId>
 				<artifactId>db-deployer-maven-plugin</artifactId>
-				<version>1.0.0</version>
+				<version>1.0.1-SNAPSHOT</version>
 			</plugin>
 		</plugins>
 	</build>
