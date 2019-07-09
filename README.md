@@ -16,7 +16,7 @@ project
 <build>
 		<plugins>
 			<plugin>
-				<groupId>org.ysh</groupId>
+				<groupId>io.github.yangshuo</groupId>
 				<artifactId>db-deployer-maven-plugin</artifactId>
 				<version>1.0.2-SNAPSHOT</version>
 			</plugin>
@@ -29,7 +29,7 @@ project
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.ysh</groupId>
+				<groupId>io.github.yangshuo</groupId>
 				<artifactId>db-deployer-maven-plugin</artifactId>
 				<version>1.0.2-SNAPSHOT</version>
 				<configuration>
@@ -56,7 +56,7 @@ project
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.ysh</groupId>
+				<groupId>org.yshio.github.yangshuo</groupId>
 				<artifactId>db-deployer-maven-plugin</artifactId>
 				<version>1.0.2-SNAPSHOT</version>
 			</plugin>

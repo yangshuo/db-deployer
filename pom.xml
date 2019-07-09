@@ -1,15 +1,16 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" 
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.ysh</groupId>
+	<groupId>io.github.yangshuo</groupId>
 	<artifactId>db-deployer</artifactId>
 	<version>1.0.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
-
+	
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		
+		
 		<mysql.jdbc.driver.version>6.0.6</mysql.jdbc.driver.version>
 		<apache.commons.lang3.vesion>3.7</apache.commons.lang3.vesion>
 		<apache.commons.collection.version>4.1</apache.commons.collection.version>
@@ -23,42 +24,63 @@
 		<google.guava.version>25.1-jre</google.guava.version>
 		<apache.maven.plugin.version>3.0</apache.maven.plugin.version>
 		<apache.maven.plugin.annotation.version>3.4</apache.maven.plugin.annotation.version>
-
-
+		
+		
 		<junit.version>4.12</junit.version>
 		<easymock.version>3.6</easymock.version>
+		
+		<maven.source.plugin.version>2.4</maven.source.plugin.version>
+		<maven.javadoc.plugin.version>2.10.4</maven.javadoc.plugin.version>
+		<maven.gpg.plugin.version>1.6</maven.gpg.plugin.version>
 	</properties>
-
+	
+	
 	<modules>
 		<module>db-deployer-api</module>
 		<module>db-deployer-impl</module>
 		<module>db-deployer-maven-plugin</module>
 		<module>db-deployer-maven-plugin-demo</module>
 	</modules>
-
+	
+	<scm>
+		<url>https://github.com/yangshuo/db-deployer</url>
+		<connection>https://github.com/yangshuo/db-deployer.git</connection>
+	</scm>
+	
+	<developers>
+		<developer>
+			<name>yangshuo</name>
+			<id>yangshuo</id>
+			<email>yangshuosdu@qq.com</email>
+			<roles>
+				<role>Developer</role>
+			</roles>
+		</developer>
+	</developers>
+	
 	<dependencyManagement>
 		<dependencies>
 			<!-- API -->
 			<dependency>
-				<groupId>org.ysh</groupId>
+				<groupId>io.github.yangshuo</groupId>
 				<artifactId>db-deployer-api</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-
+			
 			<!-- Impl -->
 			<dependency>
-				<groupId>org.ysh</groupId>
+				<groupId>io.github.yangshuo</groupId>
 				<artifactId>db-deployer-impl</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-
+			
 			<!-- JDBC Driver -->
 			<dependency>
 				<groupId>mysql</groupId>
 				<artifactId>mysql-connector-java</artifactId>
 				<version>${mysql.jdbc.driver.version}</version>
 			</dependency>
-
+			
 			<!-- Apache -->
 			<dependency>
 				<groupId>org.apache.commons</groupId>
@@ -95,14 +117,14 @@
 				<artifactId>httpclient</artifactId>
 				<version>${apache.httpclient.version}</version>
 			</dependency>
-
+			
 			<!-- Google Guava -->
 			<dependency>
 				<groupId>com.google.guava</groupId>
 				<artifactId>guava</artifactId>
 				<version>${google.guava.version}</version>
 			</dependency>
-
+			
 			<!-- Log -->
 			<dependency>
 				<groupId>org.slf4j</groupId>
@@ -119,8 +141,8 @@
 				<artifactId>log4j-slf4j-impl</artifactId>
 				<version>${apache.log4j.version}</version>
 			</dependency>
-
-
+			
+			
 			<!-- Maven plugins -->
 			<dependency>
 				<groupId>org.apache.maven</groupId>
@@ -133,8 +155,8 @@
 				<version>${apache.maven.plugin.annotation.version}</version>
 				<scope>provided</scope>
 			</dependency>
-
-
+			
+			
 			<!-- Unit Test -->
 			<dependency>
 				<groupId>junit</groupId>
@@ -150,16 +172,82 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-
+	
 	<build>
 		<pluginManagement>
 			<plugins>
 				<plugin>
-					<groupId>org.ysh</groupId>
+					<groupId>io.github.yangshuo</groupId>
 					<artifactId>db-deployer-maven-plugin</artifactId>
 					<version>${project.version}</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>
+		
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>${maven.source.plugin.version}</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>${maven.javadoc.plugin.version}</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>${maven.gpg.plugin.version}</version>
+				<executions>
+					<execution>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
 	</build>
+	
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
+	
+	<profiles>
+		<profile>
+			<id>deploy</id>
+			<modules>
+				<module>db-deployer-api</module>
+				<module>db-deployer-impl</module>
+				<module>db-deployer-maven-plugin</module>
+			</modules>
+		</profile>
+	</profiles>
 </project>
