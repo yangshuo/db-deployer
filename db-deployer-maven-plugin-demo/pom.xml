@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>io.github.yangshuo</groupId>
 		<artifactId>db-deployer</artifactId>
-		<version>1.0.2-SNAPSHOT</version>
+		<version>1.0.2</version>
 	</parent>
 	<artifactId>db-deployer-maven-plugin-demo</artifactId>
 	<packaging>pom</packaging>
